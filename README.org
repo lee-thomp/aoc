@@ -1,0 +1,11 @@
+# -*- mode:org; coding:utf-8; indent-tabs-mode:nil; fill-column:80 -*-
+#+title:	Advent of Code Solutions
+#+author:	Lee Thompson
+#+date:		[2024-12-07 Sat]
+#+options:	toc:nil num:nil h:6
+
+* Summary
+In this repo are my solutions to [[https://adventofcode.com/][Advent of Code]] problems by year and
+language.
+
+#  LocalWords:  repo
