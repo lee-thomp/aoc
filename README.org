@@ -21,4 +21,9 @@ I've not added my input files to this repo, so if you want to run this for
 yourself you'll have to make your own input files or grab your own from Advent
 of Code.
 
+* Error Handling
+To minimise my tendency to overthink or get distracted I'm deliberately choosing
+to avoid responsibility for all sort of error handling or reporting and leave it
+solely up to the implementation language's ability to crash at runtime.
+
 #  LocalWords:  repo readme
