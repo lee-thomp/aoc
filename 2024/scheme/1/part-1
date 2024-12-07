@@ -1,0 +1,36 @@
+#!/usr/bin/env -S guile -e main -s
+!#
+;;; -*- mode:scheme; coding:utf-8; indent-tabs-mode:nil; fill-column:80 -*-
+(use-modules (ice-9 format)
+	     (ice-9 getopt-long))
+
+(define *option-spec*
+  '([help     (single-char #\h) (value #f)]
+    [solution (single-char #\s) (value #t)]))
+
+(define *usage*
+  "Usage: part-1 [OPTION] <file>
+Find total distance between paired lists.
+
+  -s, --solution  choose between naive solution or shortcut solution
+  -h, --help      display this help text and exit
+")
+
+(define (exit-usage)
+  (format #t *usage*)
+  (exit EXIT_FAILURE))
+
+(define (main args)
+  (let* ([options (getopt-long args *option-spec*)]
+	 [help-wanted? (option-ref options 'help #f)]
+	 [solution     (option-ref options 'solution "naive")]
+	 [non-options  (option-ref options '() #f)])
+
+    (when (or help-wanted?			; User wants help text
+	      (null? non-options)		; Missing file input
+	      (not (= 1 (length non-options)))) ; Too many args
+      (exit-usage))	
+
+    (format #t "solution: ~s~%" solution)
+    (format #t "non-options: ~s~%" non-options)))
+
