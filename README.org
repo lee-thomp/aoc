@@ -8,4 +8,22 @@
 In this repo are my solutions to [[https://adventofcode.com/][Advent of Code]] problems by year and
 language.
 
-#  LocalWords:  repo
+* Running
+Unless otherwise stated in more specific readme files run each solution for a
+day by calling it on the command line with the input file as an argument.  For
+example from the root of this repo:
+#+begin_example
+cd 2024/scheme/1/
+./part-1 input
+#+end_example
+
+I've not added my input files to this repo, so if you want to run this for
+yourself you'll have to make your own input files or grab your own from Advent
+of Code.
+
+* Error Handling
+To minimise my tendency to overthink or get distracted I'm deliberately choosing
+to avoid responsibility for all sort of error handling or reporting and leave it
+solely up to the implementation language's ability to crash at runtime.
+
+#  LocalWords:  repo readme
