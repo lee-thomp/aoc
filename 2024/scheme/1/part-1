@@ -1,36 +1,47 @@
 #!/usr/bin/env -S guile -e main -s
 !#
-;;; -*- mode:scheme; coding:utf-8; indent-tabs-mode:nil; fill-column:80 -*-
-(use-modules (ice-9 format)
-	     (ice-9 getopt-long))
+(use-modules (ice-9 textual-ports))
 
-(define *option-spec*
-  '([help     (single-char #\h) (value #f)]
-    [solution (single-char #\s) (value #t)]))
+(define (solve file)
+  (call-with-input-file file
+    (λ (port)
+      (let loop ([c (get-line port)]
+                 [left  '()]
+                 [right '()])
+        (if (eof-object? c)
+            ;; Sum the differences between pairs after sorting both lists
+            (apply + (map (compose abs -)
+                          (sort left <)
+                          (sort right <)))
+            ;; Build up left and right list; /for me/ every line of input file
+            ;; is 5 digits, 3 spaces, 5 digits and a newline.
+            (loop (get-line port)
+                  (cons (string->number (substring/read-only c 0 5)) left)
+                  (cons (string->number (substring/read-only c 8 13)) right)))))))
 
-(define *usage*
-  "Usage: part-1 [OPTION] <file>
-Find total distance between paired lists.
+;;; This works for /some/ sets of input, though I can't say why.  For me it
+;;; works for around a 100 lines of input then differs from the solution above.
+#;(define (solve-2 file)
+  (call-with-input-file file
+    (λ (port)
+      (let loop ([c (get-line port)]
+                 [left  0]
+                 [right 0])
+        (if (eof-object? c)
+            (- left right)
+            (loop (get-line port)
+                  (+ (string->number (substring/read-only c 0 5)) left)
+                  (+ (string->number (substring/read-only c 8 13)) right)))))))
 
-  -s, --solution  choose between naive solution or shortcut solution
-  -h, --help      display this help text and exit
-")
-
-(define (exit-usage)
-  (format #t *usage*)
-  (exit EXIT_FAILURE))
 
 (define (main args)
-  (let* ([options (getopt-long args *option-spec*)]
-	 [help-wanted? (option-ref options 'help #f)]
-	 [solution     (option-ref options 'solution "naive")]
-	 [non-options  (option-ref options '() #f)])
+  (exit
+   (format #t "answer: ~s~%"
+           ;; `args' always name script first
+           (solve (cadr args)))))
 
-    (when (or help-wanted?			; User wants help text
-	      (null? non-options)		; Missing file input
-	      (not (= 1 (length non-options)))) ; Too many args
-      (exit-usage))	
-
-    (format #t "solution: ~s~%" solution)
-    (format #t "non-options: ~s~%" non-options)))
-
+;; Local Variables:
+;; mode: scheme
+;; coding: utf-8
+;; indent-tabs-mode: nil
+;; End:
