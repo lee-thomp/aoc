@@ -14,7 +14,7 @@ day by calling it on the command line with the input file as an argument.  For
 example from the root of this repo:
 #+begin_example
 cd 2024/scheme/1/
-./part-1 input
+./part-1.scm input
 #+end_example
 
 I've not added my input files to this repo, so if you want to run this for
