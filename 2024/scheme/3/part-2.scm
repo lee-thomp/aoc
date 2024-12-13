@@ -10,7 +10,16 @@
 
 (define (solve file)
   (call-with-input-file file
-    _))
+    (compose
+     (λ (s)
+       (let* ([muls   (list-matches "mul\\(([0-9]+),([0-9]+)\\)" s)]
+	      [dos    (list-matches "do\\(\\)" s)]
+	      [don'ts (list-matches "don't\\(\\)" s)])
+	 ;; The idea I've got is to now build up a list of 'valid' muls by
+	 ;; iterating over the list of muls, consing them to some other list if
+	 ;; their index into the string is more than a do and less than a don't.
+	 (error "solve me!")))
+     get-string-all)))
 
 (define (main args)
   (exit
