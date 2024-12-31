@@ -7,7 +7,8 @@
 
 (define (solve port)
     (let* ([input (get-string-all port)]
-	   [line-length (1+ (string-index input #\newline 0))]
+	   ;; Detect line length to construct regexes below
+	   [line-length (string-index input #\newline 0)]
 	   [→ "XMAS"]
 	   [↘ (format #f "X.{~a}M.{~@*~a}A.{~@*~a}S" (1+ line-length))]
 	   [↓ (format #f "X.{~a}M.{~@*~a}A.{~@*~a}S" line-length)]
@@ -23,10 +24,14 @@
 	(cond [last (iter (1+ matches)
 			  rxs
 			  (regexp-exec (car rxs) input (1+ (match:start last))))]
-	      [(not (null? rxs)) (iter matches
-				       (cdr rxs)
-				       (regexp-exec (cadr rxs) input 0))]
-	      [else matches]))))
+	      ;; Return count of matches when no more matches are left and this
+	      ;; is the last regex
+	      [(null? (cdr rxs)) matches]
+	      ;; If there was no match but there are still regexes then move to
+	      ;; the next regex and reset to the start of the input
+	      [else (iter matches
+			  (cdr rxs)
+			  (regexp-exec (cadr rxs) input 0))]))))
 
 (define (main args)
   (exit
