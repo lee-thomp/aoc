@@ -15,12 +15,18 @@
 	   [← "SAMX"]
 	   [↖ (format #f "S.{~a}A.{~@*~a}M.{~@*~a}X" (1+ line-length))]
 	   [↑ (format #f "S.{~a}A.{~@*~a}M.{~@*~a}X" line-length)]
-	   [↗ (format #f "S.{~a}A.{~@*~a}M.{~@*~a}X" (1- line-length))])
-      (apply +
-	     (map (compose
-		   length
-		   (λ (r) (list-matches r input)))
-		  (list → ↘ ↓ ↙ ← ↖ ↑ ↗)))))
+	   [↗ (format #f "S.{~a}A.{~@*~a}M.{~@*~a}X" (1- line-length))]
+	   [all (map make-regexp (list → ↘ ↓ ↙ ← ↖ ↑ ↗))])
+      (let iter ([matches 0]
+		 [rxs all]
+		 [last (regexp-exec (car all) input 0)])
+	(cond [last (iter (1+ matches)
+			  rxs
+			  (regexp-exec (car rxs) input (1+ (match:start last))))]
+	      [(not (null? rxs)) (iter matches
+				       (cdr rxs)
+				       (regexp-exec (cadr rxs) input 0))]
+	      [else matches]))))
 
 (define (main args)
   (exit
