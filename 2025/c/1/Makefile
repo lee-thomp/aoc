@@ -11,6 +11,13 @@ part-1: part-1.c input.h
 run-1: part-1
 	./$<
 
+part-2: part-2.c input.h
+	$(CC) $(CFLAGS) $< -o $@
+
+.phony: run-2
+run-2: part-2
+	./$<
+
 .phony: clean
 clean:
 	rm part-1
