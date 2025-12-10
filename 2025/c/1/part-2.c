@@ -28,16 +28,16 @@ int solve(unsigned int input_len, unsigned char const *input) {
         break;
 
       case '\n':
-        full_turns += current / 100;
+
+	/* Self explanatory */
+	full_turns += current / 100;
         current %= 100;
 	
+	/* Ugly logic */
 	if (total > 0 && sign ==  1) { full_turns += (total + current) >  100; }
 	if (total < 0 && sign ==  1) { full_turns += (total + current) >    0; }
 	if (total > 0 && sign == -1) { full_turns += (total - current) <    0; }
 	if (total < 0 && sign == -1) { full_turns += (total - current) < -100; }
-
-        1 || printf("full_turns: %2d, count: %2d, \
-current × sign: %4d, total: %4d\n", full_turns, zero_count, current * sign, total);
 
         total += (current * sign);
         total %= 100;
