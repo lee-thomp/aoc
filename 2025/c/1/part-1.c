@@ -3,7 +3,7 @@
 
 #include "input.h"
 
-int solve(void) {
+int solve(unsigned int input_len, unsigned char const *input) {
 
     int total = 50;
     int zero_count = 0;
@@ -47,7 +47,7 @@ int solve(void) {
 
 int main(void) {
 
-    printf("%d\n", solve());
+    printf("%d\n", solve(input_len, input));
 
     return 0;
 }
