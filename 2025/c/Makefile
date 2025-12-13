@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS+=-Werror -Wextra -std=gnu23 # -Wpedantic forbids case ranges
+CFLAGS+=-Werror -Wextra -Wconversion -std=gnu23 # -Wpedantic forbids case ranges
 
 input.h: input
 	xxd -i $< > $@
