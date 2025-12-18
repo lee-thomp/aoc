@@ -13,14 +13,18 @@ unsigned long int upow(unsigned long int const base,
   return result;
 }
 
-bool is_invalid(unsigned long int const id) {
+unsigned int count_digits(unsigned long int n) {
 
-  /* Count digits */
-  unsigned long int digits = 1;
-  unsigned long int n = id;
+  unsigned int digits = 1;
   while (n /= 10uL) {
     ++digits;
   }
+  return digits;
+}
+
+bool is_invalid(unsigned long int const id) {
+
+  unsigned int digits = count_digits(id);
 
   if (digits % 2uL) {
     /* IDs with odd digit count are all valid */
