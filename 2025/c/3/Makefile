@@ -1,0 +1,1 @@
+/home/lee/Opt/aoc/2025/c/Makefile
